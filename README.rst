@@ -9,3 +9,7 @@ It supports reading
 - fertility
 - light intensity
 
+*rejuvenate* Fork Note
+---------------------
+
+A maintained fork with further additions to the original (upstream) project.
