@@ -36,6 +36,9 @@ class MiFloraPoller(object):
         self.ble_timeout = 10
         self.lock = Lock()
         self._firmware_version = None
+        if not self.backend.check_prerequisites():
+            raise FileNotFoundError("The prerquisites for your backend are not met. " +
+                "Please resolve the issue and try again.")
 
     def name(self):
         """
@@ -48,6 +51,10 @@ class MiFloraPoller(object):
         if not name:
             raise IOError("Could not read data from Mi Flora sensor %s" % (self._mac))
         return ''.join(chr(n) for n in name)
+
+    def clear_cache(self):
+        self._cache = None
+        self._last_read = None
 
     def fill_cache(self):
         firmware_version = self.firmware_version()
@@ -73,6 +80,9 @@ class MiFloraPoller(object):
             self._last_read = datetime.now() - self._cache_timeout + \
                 timedelta(seconds=300)
         self.backend.disconnect(self._mac)
+
+    def cache_available(self):
+        return self._cache is not None
 
     def battery_level(self):
         """

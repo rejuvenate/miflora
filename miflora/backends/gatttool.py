@@ -25,6 +25,10 @@ class GatttoolBackend(AbstractBackend):
         self.retries = retries
         self.timeout = timeout
 
+    def check_prerequisites():
+        # gatttool is an external command and it's existence and operation need to be checked
+        return not call("command -v gatttool", shell=True, stdout=PIPE, stderr=PIPE)
+
     def connect(self,mac):
         # connection handling is not required when using gatttool, but we still need the mac
         self.mac = mac

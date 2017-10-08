@@ -12,14 +12,22 @@ class AbstractBackend(object):
     def __del__(self):
         self.disconnect()
 
+    def check_prerequisites(self):
+        """Check if the backend is ready to be used.
+
+        Returns True if all requirements are met, False otherwise
+
+        only required by some backends"""
+        return True
+
     def connect(self, mac):
-        """connect to a device with the given @mac.
+        """Connect to a device with the given @mac.
 
         only required by some backends"""
         raise NotImplemented
 
     def disconnect(self):
-        """disconnect from a device.
+        """Disconnect from a device.
 
         only required by some backends"""
         raise NotImplemented
